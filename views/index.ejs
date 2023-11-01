@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Link Shortener</title>
+    <style>
+      body {
+        background-color: rgb(27, 24, 24);
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      a:hover {
+        text-decoration: none;
+        color: rgb(26, 181, 26);
+      }
+      h1 {
+        color: azure;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Link Shortener</h1>
+      <form action="/short-url" method="post" class="my-5 form-inline">
+        <label for="fullUrl" class="sr-only">Url:</label>
+        <input
+          required
+          type="url"
+          name="fullUrl"
+          id="fullUrl"
+          placeholder="Enter URL....."
+          class="form-control col mr-2"
+        />
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+
+      <table
+        class="table table-bordered table-dark table-hover table-sm table-responsive-sm"
+      >
+        <thead class="thead-dark">
+          <tr>
+            <th>Original Url</th>
+            <th>Short Url</th>
+            <th>Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% shortUrls.forEach(shortUrl => { %>
+          <tr>
+            <td>
+              <a href="<%= shortUrl.full %>"><%= shortUrl.full %></a>
+            </td>
+            <td>
+              <a href="<%= shortUrl.short %>"><%= shortUrl.short %></a>
+            </td>
+            <td><%= shortUrl.clicks %></td>
+            <td>
+              <form action="/delete/<%= shortUrl._id %>" method="post">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
