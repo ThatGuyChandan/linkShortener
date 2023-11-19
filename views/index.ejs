@@ -4,78 +4,82 @@
     <meta charset="UTF-8" />
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
     />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Link Shortener</title>
-    <style>
-      body {
-        background-color: rgb(27, 24, 24);
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-        transition: color 0.3s;
-      }
-
-      a:hover {
-        text-decoration: none;
-        color: rgb(26, 181, 26);
-      }
-      h1 {
-        color: azure;
-        text-align: center;
-      }
-    </style>
   </head>
-  <body>
-    <div class="container">
-      <h1>Link Shortener</h1>
-      <form action="/short-url" method="post" class="my-5 form-inline">
-        <label for="fullUrl" class="sr-only">Url:</label>
+
+  <body class="bg-gray-800 font-sans text-white">
+    <div class="container mx-auto py-12">
+      <h1 class="text-4xl mb-8 text-center">Link Shortener</h1>
+
+      <form
+        action="/short-url"
+        method="post"
+        class="my-5 flex items-center justify-center"
+      >
         <input
           required
           type="url"
           name="fullUrl"
           id="fullUrl"
           placeholder="Enter URL....."
-          class="form-control col mr-2"
+          class="p-4 rounded-l-md focus:outline-none focus:shadow-outline border-t border-b border-l text-gray-800"
         />
-        <button type="submit" class="btn btn-success">Submit</button>
+        <button
+          type="submit"
+          class="btn bg-green-500 text-white font-semibold rounded-r-md px-6 py-4"
+        >
+          Submit
+        </button>
       </form>
 
-      <table
-        class="table table-bordered table-dark table-hover table-sm table-responsive-sm"
-      >
-        <thead class="thead-dark">
-          <tr>
-            <th>Original Url</th>
-            <th>Short Url</th>
-            <th>Clicks</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% shortUrls.forEach(shortUrl => { %>
-          <tr>
-            <td>
-              <a href="<%= shortUrl.full %>"><%= shortUrl.full %></a>
-            </td>
-            <td>
-              <a href="<%= shortUrl.short %>"><%= shortUrl.short %></a>
-            </td>
-            <td><%= shortUrl.clicks %></td>
-            <td>
-              <form action="/delete/<%= shortUrl._id %>" method="post">
-                <button type="submit" class="btn btn-danger">Delete</button>
-              </form>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+      <div class="">
+        <table class="min-w-full bg-gray-900 border border-gray-700">
+          <thead class="bg-gray-800 text-white">
+            <tr>
+              <th class="py-2 px-4 text-left">Original Url</th>
+              <th class="py-2 px-4 text-left">Short Url</th>
+              <th class="py-2 px-4 text-left">Clicks</th>
+              <th class="py-2 px-4 text-left"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% shortUrls.forEach(shortUrl => { %>
+            <tr class="bg-gray-700 hover:bg-gray-600">
+              <td class="py-2 px-4">
+                <a
+                  href="<%= shortUrl.full %>"
+                  class="underline hover:text-green-500"
+                  target="_blank"
+                  ><%= shortUrl.full %></a
+                >
+              </td>
+              <td class="py-2 px-4">
+                <a
+                  href="<%= shortUrl.short %>"
+                  class="underline hover:text-green-500"
+                  target="_blank"
+                  ><%= shortUrl.short %></a
+                >
+              </td>
+              <td class="py-2 px-4"><%= shortUrl.clicks %></td>
+              <td class="py-2 px-4">
+                <form action="/delete/<%= shortUrl._id %>" method="post">
+                  <button
+                    type="submit"
+                    class="btn bg-red-500 text-white font-semibold rounded px-4 py-2"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>
